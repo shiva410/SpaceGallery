@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Space Gallery</title>
+<link href="site.css" rel="stylesheet">
+<link href="lightbox.css" rel="stylesheet">
+<script src="../_js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+	$('#gallery a').click(function(evt) {
+		var imgPath, newImage;
+		//get path to new image
+	  	imgPath = $(this).attr('href');
+	   	//create HTML for new image, set opacity
+	   	// also callback for when image loads
+		$img = $('<img src="' + imgPath +'">').css('opacity',0).load(displayImage);
+		
+		
+		//don't follow link
+		evt.preventDefault();
+		//don't let event go up page
+		evt.stopPropagation();
+	}); // end click
+
+	function displayImage() {
+		// add overlay
+		$('<div id="overlay"><div id="photo"></div></div>').prependTo('body');
+		// select photo div
+		$photoDiv = $('#photo');
+		//add to the #photo div
+		$photoDiv.append($img);	
+		
+		// position image
+    	$photoDiv.css({marginLeft : ($img.outerWidth()/2) * -1, marginTop : ($img.outerHeight()/2) * -1});
+    	//fade in new image
+		$img.animate({opacity: 1}, 1000);
+	}
+
+	$('html').on('click',function(evt) {
+		var $overlay = $('#overlay');
+		if (evt.target == $overlay.get(0)) {
+				$overlay.remove();
+		}	
+	});
+}); // end ready
+</script>
+</head>
+<body>
+<div class="wrapper">
+
+
+<div class="content">
+	<div class="main"><center>
+		<h1>Space Gallery</h1>
+		<br>
+		<br>
+		<div id="gallery">
+		<a href="Sun.jpg"><img src="Sun_h.jpg" width="200" height="200" alt="Sun"></a>
+		<a href="Moon.jpg"><img src="Moon_h.jpg" width="200" height="200" alt="Moon"></a>
+		<a href="Earth.jpg"><img src="Earth_h.jpg" width="200" height="200" alt="Earth"></a>
+		<a href="Mars.jpg"><img src="Mars_h.jpg" width="200" height="200" alt="Mars"></a>
+		<a href="Jupiter.jpg"><img src="Jupiter_h.jpg" width="200" height="200" alt="Jupiter"></a>
+		<a href="Saturn.jpg"><img src="Saturn_h.jpg" width="200" height="200" alt="Saturn"></a>
+		<a href="Solar_System.jpg"><img src="Solar_System_h.jpg" width="200" height="200" alt="Solar System"></a>
+		<a href="Milky_Way.jpg"><img src="Milky_Way_h.jpg" width="200" height="200" alt="Milky Way"></a>
+		<a href="Universe.jpg"><img src="Universe_h.jpg" width="200" height="200" alt="Universe"></a>
+		</div>
+	</center>
+	</div>
+</div>
+</div>
+</body>
+</html>
